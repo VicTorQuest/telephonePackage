@@ -34,24 +34,20 @@ class Telephone {
     }
 }
 
-class Observer {
-    notify(number) {
-        throw new Error("Observer notify method must be implemented.");
-    }
-}
 
-class PrintObserver extends Observer {
+class CallLogger {
+    // First observer simple outputs the phone number
     notify(number) {
         console.log(number);
     }
 }
 
-class MessageObserver extends Observer {
+class ContactNotifier {
     constructor(contactList = []) {
-        super();
         this.contactList = new Set(contactList);
     }
 
+    // secon
     notify(number) {
         if (this.contactList.has(number)) {
             console.log(`Now Dialling ${number}`);
@@ -61,21 +57,21 @@ class MessageObserver extends Observer {
     }
 }
 
-// Example Usage
+// initializing
 const tel = new Telephone();
 
-// Add observers
-const printObserver = new PrintObserver();
-const messageObserver = new MessageObserver(["2347023232", "1234567890"]);
+// Adding observers
+const callLogger = new CallLogger();
+const contactNotifier = new ContactNotifier(["+2347023232", "+1234567890"]);
 
-tel.addObserver(printObserver);
-tel.addObserver(messageObserver);
+tel.addObserver(callLogger);
+tel.addObserver(contactNotifier);
 
 // Add phone numbers
-tel.addPhoneNumber("2347023232");
-tel.addPhoneNumber("1234567890");
+tel.addPhoneNumber("+2347023232");
+tel.addPhoneNumber("+1234567890");
 
 // Dial a number
-tel.dialPhoneNumber("2347023232");
+tel.dialPhoneNumber("+2347023232");
 // Dial a number not added
-tel.dialPhoneNumber("1111111111");
+tel.dialPhoneNumber("+1111111111");
